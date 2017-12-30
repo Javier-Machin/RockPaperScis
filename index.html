@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>JavaScript Test Console</title>
+</head>
+
+<body>
+	<script>
+
+		let playerSelection;
+		let computerSelection;
+		let result;
+		let playerScore = 0;
+		let computerScore = 0;
+		let roundsPlayed = 0;
+
+		function computerPlay() {
+			let randomNumber = Math.floor((Math.random() * 10) + 1);
+			let play;
+			if (randomNumber >= 1 && randomNumber < 4 ) {
+				play = "rock";
+			} else if (randomNumber >= 4 && randomNumber < 8 ) {
+				play = "paper";
+			} else {
+				play = "scissors";
+			}
+			return play;
+		}
+
+		function playerPlay() {
+			let play = prompt("Rock, paper or scissors, my dude? haHAA").toLowerCase();
+			if (play != "rock" && play != "paper" && play != "scissors") {
+				play = false;
+			}
+			return play;
+		}
+
+		function scoreControl() {
+	 		if (result == "victory") {
+	 			roundsPlayed++;
+	 			playerScore++;
+	 		} else if (result == "defeat") {
+	 			roundsPlayed++;
+	 			computerScore++;
+	 		} else if (result == "draw") {
+	 			roundsPlayed++;
+	 		}
+
+	 		if (roundsPlayed == 5) {
+	 			if (playerScore > computerScore) {
+	 				result = "playerWon";
+	 			} else if (playerScore < computerScore) {
+	 				result = "computerWon";		
+	 			} else {
+	 				result = "matchDraw";
+	 			}
+	 		}
+		}
+
+		function playResult(result, computerSelection, playerSelection) {
+			if (result == "victory") {
+				return alert("You win! " + playerSelection + " beats " + computerSelection + "!");
+			} else if (result == "defeat") {
+				return alert("You lose! " + playerSelection + " is defeated by " + computerSelection + "!");
+			} else if (result == "draw") {
+				return alert("It's a draw!");
+			} else if (result == "computerWon") {
+			  	return alert("Game Over! Final Score: Player " + playerScore + " Computer: " + computerScore);
+			} else if (result == "playerWon") {
+			    return alert("You won the match!! Final Score: Player " + playerScore + " Computer: " + computerScore);
+			} else if (result == "matchDraw") {
+			    return alert("The match ended in a draw!! Final Score: Player " + playerScore + " Computer: " + computerScore);
+			} else {	
+				return alert("Not valid move my dude, haHAA")
+			}	
+		}
+
+		function playRound(computerSelection, playerSelection) {
+			if ((playerSelection)) {
+
+				if (playerSelection == "rock" && computerSelection == "scissors") {
+					return "victory";
+				} else if (playerSelection == "rock" && computerSelection == "paper") {
+					return "defeat";
+				} else if (playerSelection == "rock" && computerSelection == "rock") {
+					return "draw";
+				}
+
+				if (playerSelection == "paper" && computerSelection == "rock") {
+					return "victory";
+				} else if (playerSelection == "paper" && computerSelection == "scissors") {
+					return "defeat";
+				} else if (playerSelection == "paper" && computerSelection == "paper") {
+					return "draw";
+				}
+
+				if (playerSelection == "scissors" && computerSelection == "paper") {
+					return "victory";
+				} else if (playerSelection == "scissors" && computerSelection == "rock") {
+					return "defeat";
+				} else if (playerSelection == "scissors" && computerSelection == "scissors") {
+					return "draw";
+				}
+
+			} else {
+			  	return "invalid";
+			}
+		}
+
+		function game() {
+			computerSelection = computerPlay();
+			playerSelection = playerPlay();
+			result = playRound(computerSelection, playerSelection);
+			scoreControl();
+			return playResult(result, computerSelection, playerSelection);
+		}
+
+		for (; roundsPlayed < 5;) {
+
+			console.log(game());
+		}	
+
+	</script>
+</body>
+
+</html>

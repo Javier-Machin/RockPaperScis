@@ -17,6 +17,7 @@
 		let roundsPlayed = 0;
 
         // The computer picks a weapon using Math.random method rounded by Math.Floor
+        // Specifies the odds for every weapon.
 
 		function computerPlay() {
 			let randomNumber = Math.floor((Math.random() * 10) + 1);
@@ -31,8 +32,10 @@
 			return play;
 		}
 
+		// Asks the player to pick a weapon and checks if its valid, convert the selection to lower case to allow upper and lower case input.
+
 		function playerPlay() {
-			let play = prompt("Rock, paper or scissors, my dude? haHAA");
+			let play = prompt("Rock, Paper or Scissors?");
 
 			if (play) {
 				play = play.toLowerCase();
@@ -43,6 +46,10 @@
 			}
 			return play;
 		}
+
+		// Control each player's score and the number of valid rounds.
+		// The variable roundsPlayed is used as part of the condition in the main "for" bucle 
+		// to control how many valid rounds must be played before the game ends
 
 		function scoreControl() {
 	 		if (result == "victory") {
@@ -66,6 +73,8 @@
 	 		}
 		}
 
+		// Displays a different message and the scores for each round outcome.
+
 		function playResult(result, computerSelection, playerSelection, computerScore, playerScore) {
 			if (result == "victory") {
 				return alert("You win! " + playerSelection + " beats " + computerSelection + "! Player " + playerScore + " Computer: " + computerScore);
@@ -80,9 +89,11 @@
 			} else if (result == "matchDraw") {
 			    return alert("The match ended in a draw!! Final Score: Player " + playerScore + " Computer: " + computerScore);
 			} else {	
-				return alert("Not valid move my dude, haHAA")
+				return alert("Not valid move")
 			}	
 		}
+
+		// Checks who wins the round by defining the outcome of every matchup.
 
 		function playRound(computerSelection, playerSelection) {
 			if ((playerSelection)) {
@@ -116,6 +127,8 @@
 			}
 		}
 
+		// Main game function; Calls every function in the correct order.
+
 		function game() {
 			computerSelection = computerPlay();
 			playerSelection = playerPlay();
@@ -124,6 +137,9 @@
 			return playResult(result, computerSelection, playerSelection, computerScore, playerScore);
 		}
 
+		// Bucle that specifies how many rounds will be played
+		// The number in the condition must match the condition for roundsPlayed's "if" in the scoreControl function to display final score at the end of the match.
+		
 		for (; roundsPlayed < 5;) {
 			console.log(game());
 		}	

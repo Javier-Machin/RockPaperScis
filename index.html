@@ -16,6 +16,8 @@
 		let computerScore = 0;
 		let roundsPlayed = 0;
 
+        // The computer picks a weapon using Math.random method rounded by Math.Floor
+
 		function computerPlay() {
 			let randomNumber = Math.floor((Math.random() * 10) + 1);
 			let play;
@@ -30,7 +32,12 @@
 		}
 
 		function playerPlay() {
-			let play = prompt("Rock, paper or scissors, my dude? haHAA").toLowerCase();
+			let play = prompt("Rock, paper or scissors, my dude? haHAA");
+
+			if (play) {
+				play = play.toLowerCase();
+			}
+
 			if (play != "rock" && play != "paper" && play != "scissors") {
 				play = false;
 			}
@@ -59,13 +66,13 @@
 	 		}
 		}
 
-		function playResult(result, computerSelection, playerSelection) {
+		function playResult(result, computerSelection, playerSelection, computerScore, playerScore) {
 			if (result == "victory") {
-				return alert("You win! " + playerSelection + " beats " + computerSelection + "!");
+				return alert("You win! " + playerSelection + " beats " + computerSelection + "! Player " + playerScore + " Computer: " + computerScore);
 			} else if (result == "defeat") {
-				return alert("You lose! " + playerSelection + " is defeated by " + computerSelection + "!");
+				return alert("You lose! " + playerSelection + " is defeated by " + computerSelection + "! Player " + playerScore + " Computer: " + computerScore);
 			} else if (result == "draw") {
-				return alert("It's a draw!");
+				return alert("It's a draw! Player " + playerScore + " Computer: " + computerScore);
 			} else if (result == "computerWon") {
 			  	return alert("Game Over! Final Score: Player " + playerScore + " Computer: " + computerScore);
 			} else if (result == "playerWon") {
@@ -114,11 +121,10 @@
 			playerSelection = playerPlay();
 			result = playRound(computerSelection, playerSelection);
 			scoreControl();
-			return playResult(result, computerSelection, playerSelection);
+			return playResult(result, computerSelection, playerSelection, computerScore, playerScore);
 		}
 
 		for (; roundsPlayed < 5;) {
-
 			console.log(game());
 		}	
 

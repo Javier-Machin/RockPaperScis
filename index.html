@@ -3,10 +3,26 @@
 <html>
 
 <head>
-	<title>JavaScript Test Console</title>
+	<title>JavaScript Rock Paper Scissors Game V2</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+
+	<div class="scoreContainer">
+		<p class="playerScore">Player: 0</p>
+		<p class="computerScore">Computer: 0</p>
+	</div>
+
+	<div class="buttonsContainer">
+		<p>Pick a weapon!</p>
+		<button id="rock">Rock</button>
+		<button id="paper">Paper</button>
+		<button id="scissors">Scissors</button>
+	</div>
+
+	<p class="result"></p>
+
 	<script>
 
 		let playerSelection;
@@ -14,87 +30,93 @@
 		let result;
 		let playerScore = 0;
 		let computerScore = 0;
+		let roundsWanted = 5; // Can be changed to the any desired number of rounds to be played.
 		let roundsPlayed = 0;
+		let buttons = document.querySelectorAll("button");
+		let browserResult = document.querySelector(".result");
 
-        // The computer picks a weapon using Math.random method rounded by Math.Floor
+        // The computer picks a weapon.
         // Specifies the odds for every weapon.
-
 		function computerPlay() {
 			let randomNumber = Math.floor((Math.random() * 10) + 1);
-			let play;
+			
 			if (randomNumber >= 1 && randomNumber < 4 ) {
-				play = "rock";
+				return "rock";
 			} else if (randomNumber >= 4 && randomNumber < 8 ) {
-				play = "paper";
+				return "paper";
 			} else {
-				play = "scissors";
+				return "scissors";
 			}
-			return play;
 		}
 
-		// Asks the player to pick a weapon and checks if its valid, convert the selection to lower case to allow upper and lower case input.
+		// Controls each player's score and the number of rounds played.
+		function scoreControl(roundsWanted) {
+			if (roundsPlayed != roundsWanted) {
 
-		function playerPlay() {
-			let play = prompt("Rock, Paper or Scissors?");
+				//Chrome allows to use classList.add and classList.remove with several class-names but not all browsers do
+				browserResult.classList.remove('red');
+				browserResult.classList.remove('green');
+				browserResult.classList.remove('black')
+	 			if (result == "victory") {
+	 				roundsPlayed++;
+	 				playerScore++;
+	 				document.querySelector(".playerScore").textContent = "Player: " + playerScore;
+	 			} else if (result == "defeat") {
+	 				roundsPlayed++;
+	 				computerScore++;
+	 				document.querySelector(".computerScore").textContent = "Computer: " + computerScore;
+	 			} else if (result == "draw") {
+	 				roundsPlayed++;
+	 			}
 
-			if (play) {
-				play = play.toLowerCase();
-			}
-
-			if (play != "rock" && play != "paper" && play != "scissors") {
-				play = false;
-			}
-			return play;
-		}
-
-		// Control each player's score and the number of valid rounds.
-		// The variable roundsPlayed is used as part of the condition in the main "for" bucle 
-		// to control how many valid rounds must be played before the game ends
-
-		function scoreControl() {
-	 		if (result == "victory") {
-	 			roundsPlayed++;
-	 			playerScore++;
-	 		} else if (result == "defeat") {
-	 			roundsPlayed++;
-	 			computerScore++;
-	 		} else if (result == "draw") {
-	 			roundsPlayed++;
 	 		}
 
-	 		if (roundsPlayed == 5) {
+	 		if (roundsPlayed == roundsWanted) {
 	 			if (playerScore > computerScore) {
 	 				result = "playerWon";
+	 				browserResult.classList.add('green');
 	 			} else if (playerScore < computerScore) {
-	 				result = "computerWon";		
+	 				result = "computerWon";
+	 				browserResult.classList.add('red');		
 	 			} else {
 	 				result = "matchDraw";
+	 				browserResult.classList.add('black');
 	 			}
 	 		}
 		}
 
-		// Displays a different message and the scores for each round outcome.
+		// After the wanted number of rounds have been played, resets the scores for a new match.
+		function resetScore() {
+			if (roundsPlayed == roundsWanted) {
+				roundsPlayed = 0;
+				playerScore = 0;
+				computerScore = 0;
+				document.querySelector(".playerScore").textContent = "Player: " + playerScore;
+				document.querySelector(".computerScore").textContent = "Computer: " + computerScore;
+			}
+		}	
 
+		// Updates the HTML paragraph that shows different messages for each round outcome.
 		function playResult(result, computerSelection, playerSelection, computerScore, playerScore) {
 			if (result == "victory") {
-				return alert("You win! " + playerSelection + " beats " + computerSelection + "! Player " + playerScore + " Computer: " + computerScore);
+				browserResult.textContent = ("You win! " + playerSelection + " beats " + computerSelection);
 			} else if (result == "defeat") {
-				return alert("You lose! " + playerSelection + " is defeated by " + computerSelection + "! Player " + playerScore + " Computer: " + computerScore);
+				browserResult.textContent = ("You lose! " + playerSelection + " is defeated by " + computerSelection);
 			} else if (result == "draw") {
-				return alert("It's a draw! Player " + playerScore + " Computer: " + computerScore);
+				browserResult.textContent = ("It's a draw!");
 			} else if (result == "computerWon") {
-			  	return alert("Game Over! Final Score: Player " + playerScore + " Computer: " + computerScore);
+			  	browserResult.textContent = ("Game Over! Final Score: Player " + playerScore + " Computer: " +
+			  			computerScore);
 			} else if (result == "playerWon") {
-			    return alert("You won the match!! Final Score: Player " + playerScore + " Computer: " + computerScore);
+			    browserResult.textContent = ("You won the match!! Final Score: Player " + playerScore +
+			  			" Computer: " + computerScore);
 			} else if (result == "matchDraw") {
-			    return alert("The match ended in a draw!! Final Score: Player " + playerScore + " Computer: " + computerScore);
-			} else {	
-				return alert("Not valid move")
+			    browserResult.textContent = ("The match ended in a draw!! Final Score: Player " + playerScore +
+			    		" Computer: " + computerScore);
 			}	
 		}
 
-		// Checks who wins the round by defining the outcome of every matchup.
-
+		// Checks who won the round, using the game rules.
 		function playRound(computerSelection, playerSelection) {
 			if ((playerSelection)) {
 
@@ -127,22 +149,31 @@
 			}
 		}
 
-		// Main game function; Calls every function in the correct order.
-
-		function game() {
-			computerSelection = computerPlay();
-			playerSelection = playerPlay();
-			result = playRound(computerSelection, playerSelection);
-			scoreControl();
-			return playResult(result, computerSelection, playerSelection, computerScore, playerScore);
+		// If any click targets a button, specifies the player selection 
+		function playerPlay(e) {
+			console.log(e);
+			if (e.target == buttons[0]) {
+				return "rock";
+			} else if (e.target == buttons[1]) {
+				return "paper";
+			} else if (e.target == buttons[2]) {
+				return "scissors";
+			}
 		}
-
-		// Bucle that specifies how many rounds will be played
-		// The number in the condition must match the condition for roundsPlayed's "if" in the scoreControl function to display final score at the end of the match.
+		// Main game function; Calls every function in the correct order.
+		function game(e) {
+			playerSelection = playerPlay(e);
+			// The game runs only after the player has clicked a weapon button
+			if (playerSelection != undefined) {
+				computerSelection = computerPlay();
+				result = playRound(computerSelection, playerSelection);
+				scoreControl(roundsWanted);
+				let gameresult = playResult(result, computerSelection, playerSelection, computerScore, playerScore);
+				resetScore();
+			}
+		}
 		
-		for (; roundsPlayed < 5;) {
-			game();
-		}	
+        document.addEventListener('click', game); 
 
 	</script>
 </body>

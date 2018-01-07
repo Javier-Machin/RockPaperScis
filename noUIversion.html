@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<title>JavaScript Rock Paper Scissors game</title>
+</head>
+
+<body>
+	<script>
+
+		let playerSelection;
+		let computerSelection;
+		let result;
+		let playerScore = 0;
+		let computerScore = 0;
+		let roundsWanted = 5; // Can be changed to the any desired number of rounds to be played.
+		let roundsPlayed = 0;
+
+        // The computer picks a weapon.
+        // Specifies the odds for every weapon.
+		function computerPlay() {
+			let randomNumber = Math.floor((Math.random() * 10) + 1);
+			let play;
+			
+			if (randomNumber >= 1 && randomNumber < 4 ) {
+				play = "rock";
+			} else if (randomNumber >= 4 && randomNumber < 8 ) {
+				play = "paper";
+			} else {
+				play = "scissors";
+			}
+			return play;
+		}
+
+		// Asks the player to pick a weapon and checks if its valid, convert the selection to
+		// lower case to allow upper and lower case input.
+		function playerPlay() {
+			let play = prompt("Rock, Paper or Scissors?");
+
+			if (play) {
+				play = play.toLowerCase();
+			}
+
+			if (play != "rock" && play != "paper" && play != "scissors") {
+				play = false;
+			}
+			return play;
+		}
+
+		// Controls each player's score and the number of valid rounds played.
+		function scoreControl(roundsWanted) {
+	 		if (result == "victory") {
+	 			roundsPlayed++;
+	 			playerScore++;
+	 		} else if (result == "defeat") {
+	 			roundsPlayed++;
+	 			computerScore++;
+	 		} else if (result == "draw") {
+	 			roundsPlayed++;
+	 		}
+
+	 		if (roundsPlayed == roundsWanted) {
+	 			if (playerScore > computerScore) {
+	 				result = "playerWon";
+	 			} else if (playerScore < computerScore) {
+	 				result = "computerWon";		
+	 			} else {
+	 				result = "matchDraw";
+	 			}
+	 		}
+		}
+
+		// Displays a different message and the scores for each round outcome.
+		function playResult(result, computerSelection, playerSelection, computerScore, playerScore) {
+			if (result == "victory") {
+				return alert("You win! " + playerSelection + " beats " + computerSelection + "! Player " +
+						playerScore + " Computer: " + computerScore);
+			} else if (result == "defeat") {
+				return alert("You lose! " + playerSelection + " is defeated by " + computerSelection + 
+						"! Player " + playerScore + " Computer: " + computerScore);
+			} else if (result == "draw") {
+				return alert("It's a draw! Player " + playerScore + " Computer: " + computerScore);
+			} else if (result == "computerWon") {
+			  	return alert("Game Over! Final Score: Player " + playerScore + " Computer: " +
+			  			computerScore);
+			} else if (result == "playerWon") {
+			    return alert("You won the match!! Final Score: Player " + playerScore +
+			  			" Computer: " + computerScore);
+			} else if (result == "matchDraw") {
+			    return alert("The match ended in a draw!! Final Score: Player " + playerScore +
+			    		" Computer: " + computerScore);
+			} else {	
+				return alert("Not valid move")
+			}	
+		}
+
+		// Checks who won the round by defining the outcome of every matchup.
+		function playRound(computerSelection, playerSelection) {
+			if ((playerSelection)) {
+
+				if (playerSelection == "rock" && computerSelection == "scissors") {
+					return "victory";
+				} else if (playerSelection == "rock" && computerSelection == "paper") {
+					return "defeat";
+				} else if (playerSelection == "rock" && computerSelection == "rock") {
+					return "draw";
+				}
+
+				if (playerSelection == "paper" && computerSelection == "rock") {
+					return "victory";
+				} else if (playerSelection == "paper" && computerSelection == "scissors") {
+					return "defeat";
+				} else if (playerSelection == "paper" && computerSelection == "paper") {
+					return "draw";
+				}
+
+				if (playerSelection == "scissors" && computerSelection == "paper") {
+					return "victory";
+				} else if (playerSelection == "scissors" && computerSelection == "rock") {
+					return "defeat";
+				} else if (playerSelection == "scissors" && computerSelection == "scissors") {
+					return "draw";
+				}
+
+			} else {
+			  	return "invalid";
+			}
+		}
+
+		// Main game function; Calls every function in the correct order.
+		function game() {
+			computerSelection = computerPlay();
+			playerSelection = playerPlay();
+			result = playRound(computerSelection, playerSelection);
+			scoreControl(roundsWanted);
+			return playResult(result, computerSelection, playerSelection, computerScore, playerScore);
+		}
+
+        // Calls the main method as many times as rounds we want to play.	
+		for (; roundsPlayed < roundsWanted;) {
+			game();
+		}	
+
+	</script>
+</body>
+
+</html>

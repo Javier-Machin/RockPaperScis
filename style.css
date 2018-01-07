@@ -1,0 +1,56 @@
+body {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+}
+
+.scoreContainer {
+	margin-top: 250px;
+}
+
+.scoreContainer p {
+	display: inline-block;
+	font-size: 70px;
+	margin: 0 100px;
+}
+
+.buttonsContainer p {
+	font-size: 30px;
+}
+
+.buttonsContainer {
+	margin-top: 100px;
+}
+
+button {
+	font-size: 30px;
+	margin: 10px;
+}
+
+.result {
+	display: inline-block;
+	font-size: 30px;
+	padding: 4px;
+}
+
+/* The next 3 selectors are used for the final result only */
+
+.red {
+	font-weight: bolder;
+	color: red;
+	border: 2px solid red;
+	font-size: 45px;
+}
+
+.green {
+	font-weight: bolder;
+	color: green;
+	border: 2px solid green;
+	font-size: 45px;
+}
+
+.black {
+	font-weight: bolder;
+	border: 2px solid black;
+	font-size: 45px;
+}

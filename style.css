@@ -33,7 +33,7 @@ button {
 	padding: 4px;
 }
 
-/* The next 3 selectors are used for the final result only */
+/* The next 3 selectors are used only for the final result, after all rounds are played */
 
 .red {
 	font-weight: bolder;
@@ -46,11 +46,5 @@ button {
 	font-weight: bolder;
 	color: green;
 	border: 2px solid green;
-	font-size: 45px;
-}
-
-.black {
-	font-weight: bolder;
-	border: 2px solid black;
 	font-size: 45px;
 }

@@ -56,7 +56,6 @@
 				//Chrome allows to use classList.add and classList.remove with several class-names but not all browsers do
 				browserResult.classList.remove('red');
 				browserResult.classList.remove('green');
-				browserResult.classList.remove('black')
 	 			if (result == "victory") {
 	 				roundsPlayed++;
 	 				playerScore++;
@@ -65,8 +64,6 @@
 	 				roundsPlayed++;
 	 				computerScore++;
 	 				document.querySelector(".computerScore").textContent = "Computer: " + computerScore;
-	 			} else if (result == "draw") {
-	 				roundsPlayed++;
 	 			}
 
 	 		}
@@ -78,9 +75,6 @@
 	 			} else if (playerScore < computerScore) {
 	 				result = "computerWon";
 	 				browserResult.classList.add('red');		
-	 			} else {
-	 				result = "matchDraw";
-	 				browserResult.classList.add('black');
 	 			}
 	 		}
 		}
@@ -110,10 +104,7 @@
 			} else if (result == "playerWon") {
 			    browserResult.textContent = ("You won the match!! Final Score: Player " + playerScore +
 			  			" Computer: " + computerScore);
-			} else if (result == "matchDraw") {
-			    browserResult.textContent = ("The match ended in a draw!! Final Score: Player " + playerScore +
-			    		" Computer: " + computerScore);
-			}	
+			} 
 		}
 
 		// Checks who won the round, using the game rules.

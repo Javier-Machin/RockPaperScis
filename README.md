@@ -2,7 +2,7 @@ Classic Rock Paper Scissors game made in JavaScript
 
 After clicking a weapon it will be matched against the computer weapon and the outcome will be displayed.
 
-After 5 rounds (including draws) the outcome of the match will be shown and the scores reset.
+After 5 rounds (not including draws) the outcome of the match will be shown and the scores reset.
 
 
 ---------------------------------------------------------------------------------------------------------
